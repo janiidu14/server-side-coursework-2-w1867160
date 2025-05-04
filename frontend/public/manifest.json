@@ -1,0 +1,10 @@
+{
+  "short_name": "Rest Countries",
+  "name": "Rest Countries",
+  "description": "A simple app to view country details", 
+  "version": "1.0.0",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
