@@ -1,5 +1,5 @@
-# server-side-coursework-1-w1867160
-Repository for Server Side Coursework 1 - 2025
+# server-side-coursework-2-w1867160
+Repository for Server Side Coursework 2 - 2025
 Student Name - U.J Rathnayaka
 IIT No - 20210450
 UOW No - w1867160
