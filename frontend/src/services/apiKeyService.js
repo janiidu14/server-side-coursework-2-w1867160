@@ -16,7 +16,7 @@ export const generateAPIKey = async (id) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to register user.", error.message);
+      console.error("Failed to generate API key.", error.message);
       throw error;
     });
 };
@@ -31,7 +31,7 @@ export const fetchAPIKeys = async () => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to register user.", error.message);
+      console.error("Failed to fetch API keys.", error.message);
       throw error;
     });
 };
@@ -46,7 +46,7 @@ export const fetchAPIKeysByUserId = async (userId) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to register user.", error.message);
+      console.error("Failed to fetch API key.", error.message);
       throw error;
     });
 };
@@ -64,7 +64,7 @@ export const deactivateAPIKey = async (key) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to register user.", error.message);
+      console.error("Failed to deactivate API key.", error.message);
       throw error;
     });
 };
