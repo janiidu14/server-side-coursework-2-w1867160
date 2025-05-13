@@ -1,9 +1,9 @@
 import { apiInstance, secureApiInstance } from "../api/apiInstance";
 import { HTTP_METHODS } from "../common/constants";
 
-const PATH_URL = "/blogs";
+const PATH_URL = "/interactions";
 
-export const createBlog = async (data) => {
+export const createUserInteraction = async (data) => {
   console.log(data)
   return secureApiInstance
     .request({
@@ -20,10 +20,10 @@ export const createBlog = async (data) => {
     });
 };
 
-export const fetchBlogs = async () => {
-  return apiInstance
+export const fetchFollowingByUserId = async (userId) => {
+  return secureApiInstance
     .request({
-      url: PATH_URL,
+        url: `${PATH_URL}/followers/${userId}`,
       method: HTTP_METHODS.GET,
     })
     .then((response) => {
@@ -35,11 +35,11 @@ export const fetchBlogs = async () => {
     });
 };
 
-export const fetchBlogById = async (id) => {
+export const fetchFollowersByUserId = async (userId) => {
   return secureApiInstance
     .request({
-      url: `${PATH_URL}/${id}`,
-      method: HTTP_METHODS.GET,
+        url: `${PATH_URL}/followers/${userId}`,
+        method: HTTP_METHODS.GET,
     })
     .then((response) => {
       return response.data;

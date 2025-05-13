@@ -9,9 +9,10 @@ const Dashboard = () => {
   const [countries, setCountries] = useState(null);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  
   const navigate = useNavigate();
+  
   const { user } = useAuth();
-
   const userData = user?.data || null;
 
   useEffect(() => {
