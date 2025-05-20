@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, Input, Button, message, Card } from "antd";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
@@ -12,7 +11,7 @@ const LoginForm = () => {
 
       if (res?.success) {
         message.success("Login Successful");
-        navigate("/admin");
+        navigate("/blogs");
       } else {
         message.error(res?.message);
       }

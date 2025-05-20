@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../api/axios';
-import { List, Typography, Tag, Spin, message } from 'antd';
+import { List, Typography, Tag, Spin, message, Button } from 'antd';
+import { fetchUsers } from '../services/userService';
+import { useAuth } from '../context/AuthContext';
+import { createUserInteraction, deleteInteractionByUserId, fetchFollowingByUserId } from '../services/userInteractionService';
 
 const { Title } = Typography;
 
@@ -8,23 +10,23 @@ const DisplayUsers = () => {
   const [users, setUsers] = useState([]);
   const [followingIds, setFollowingIds] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState(null); // or get from AuthContext
+
+    const { user } = useAuth();
+    const userData = user?.data || null;
+    const currentUserId = userData?.id || null;
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch logged-in user
-        const meRes = await axios.get('/auth/me');
-        const userId = meRes.data.id;
-        setCurrentUser(meRes.data);
 
         // Fetch all users and current user's following list
         const [usersRes, followingRes] = await Promise.all([
-          axios.get('/users'),
-          axios.get('/follows/following')
+          fetchUsers(),
+          fetchFollowingByUserId(currentUserId)
         ]);
 
-        const otherUsers = usersRes.data.filter((u) => u.id !== userId);
+        const otherUsers = usersRes.data.filter((u) => u.id !== currentUserId);
         setUsers(otherUsers);
         setFollowingIds(followingRes.data.map((u) => u.id));
       } catch (err) {
@@ -38,6 +40,33 @@ const DisplayUsers = () => {
     fetchData();
   }, []);
 
+  const handleFollow = async (userId) => {
+    try {
+      const payload = {
+        followerId: currentUserId,
+        followingId: userId
+      };
+      await createUserInteraction(payload);
+      setFollowingIds(prev => [...prev, userId]);
+      message.success('Followed user');
+    } catch (err) {
+      message.error('Failed to follow user');
+    }
+  };
+
+  const handleUnfollow = async (userId) => {
+    try {
+      const payload = {
+        followingId: userId
+      };
+      await deleteInteractionByUserId(currentUserId, payload);
+      setFollowingIds(prev => prev.filter(id => id !== userId));
+      message.success('Unfollowed user');
+    } catch (err) {
+      message.error('Failed to unfollow user');
+    }
+  };
+
   if (loading) return <Spin />;
 
   return (
@@ -46,16 +75,27 @@ const DisplayUsers = () => {
       <List
         bordered
         dataSource={users}
-        renderItem={(user) => (
-          <List.Item>
-            {user.name || user.email}
-            {followingIds.includes(user.id) && (
-              <Tag color="blue" style={{ marginLeft: 'auto' }}>
-                Following
-              </Tag>
-            )}
-          </List.Item>
-        )}
+        renderItem={(user) => {
+          const isFollowing = followingIds.includes(user.id);
+
+          return (
+            <List.Item
+              actions={[
+                isFollowing ? (
+                  <Button type="default" onClick={() => handleUnfollow(user.id)}>
+                    Unfollow
+                  </Button>
+                ) : (
+                  <Button type="primary" onClick={() => handleFollow(user.id)}>
+                    Follow
+                  </Button>
+                ),
+              ]}
+            >
+              Name: <Tag>{user.name}</Tag> | Email: <Tag>{user.email}</Tag>
+            </List.Item>
+          );
+        }}
       />
     </>
   );

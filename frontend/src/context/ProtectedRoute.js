@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await secureApiInstance.get("/users/authenticate");
+        const res = await secureApiInstance.get("/auth/authenticate");
         if (res?.data) {
           setUser(res.data);
         }

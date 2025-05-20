@@ -70,9 +70,7 @@ const Dashboard = () => {
               { value: "independent", label: "Independent Countries" },
             ]}
           />
-          <Button type="primary" onClick={handleLogout}>
-            Logout
-          </Button>
+  
         </div>
       </div>
       {loading && <Spin />}

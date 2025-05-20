@@ -1,9 +1,9 @@
-import { secureApiInstance } from "../api/apiInstance";
+import { apiInstance, secureApiInstance } from "../api/apiInstance";
 import { HTTP_METHODS } from "../common/constants";
 
-const PATH_URL = "/interactions";
+const PATH_URL = "/reactions";
 
-export const createUserInteraction = async (data) => {
+export const createReaction = async (data) => {
   return secureApiInstance
     .request({
       url: PATH_URL,
@@ -19,10 +19,41 @@ export const createUserInteraction = async (data) => {
     });
 };
 
-export const fetchFollowingByUserId = async (userId) => {
+export const fetchReactions = async () => {
   return secureApiInstance
     .request({
-        url: `${PATH_URL}/following/${userId}`,
+        url: `${PATH_URL}`,
+      method: HTTP_METHODS.GET,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Failed to fetch f.", error.message);
+      throw error;
+    });
+};
+
+
+export const fetchReactionsToAllBlogs = async () => {
+  return secureApiInstance
+    .request({
+        url: `${PATH_URL}/blogs`,
+      method: HTTP_METHODS.GET,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Failed to fetch f.", error.message);
+      throw error;
+    });
+};
+
+export const fetchReactionsToAllBlogsPublic = async () => {
+  return apiInstance
+    .request({
+        url: `${PATH_URL}/public`,
       method: HTTP_METHODS.GET,
     })
     .then((response) => {

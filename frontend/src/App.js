@@ -1,7 +1,10 @@
-import React from "react";
-import { Layout, Menu, theme } from "antd";
-import { HomeOutlined, DashboardOutlined, ProfileOutlined, UserOutlined } from "@ant-design/icons";
-import { Routes, Route, useNavigate, useLocation, Navigate } from "react-router-dom";
+import { Button, Layout, Menu, message, theme } from "antd";
+import {
+  HomeOutlined,
+  DashboardOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import RegisterForm from "./components/RegisterForm.js";
 import LoginForm from "./components/LoginFom.js";
 import ProtectedRoute from "./context/ProtectedRoute.js";
@@ -13,8 +16,10 @@ import EditBlog from "./components/EditBlog.js";
 import CreateBlog from "./components/CreateBlog.js";
 import ProfilePage from "./screens/ProfilePage.js";
 import FollowFeed from "./screens/FollowFeed.js";
+import DisplayUsers from "./screens/DisplayUsers.js";
+import { logout } from "./services/authService.js";
 
-const { Content, Footer } = Layout;
+const { Content, Footer, Header } = Layout;
 
 const App = () => {
   const {
@@ -22,9 +27,21 @@ const App = () => {
   } = theme.useToken();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const user = useAuth();
-  console.log(user)
+
+  const { user, setUser } = useAuth();
+  const userData = user?.data || null;
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      message.success("Logged out successfully");
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      message.error("Logout failed");
+    }
+  };
 
   const items = [
     {
@@ -46,12 +63,14 @@ const App = () => {
       key: "4",
       icon: <UserOutlined />,
       label: "Profile",
-    }
+    },
   ];
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
+      <Header style={{ display: "flex", justifyContent: "space-between" }}>
         <Menu
+          style={{ width: "-webkit-fill-available" }}
           theme="dark"
           mode="horizontal"
           items={items}
@@ -62,6 +81,20 @@ const App = () => {
             if (key === "4") navigate("/profile");
           }}
         />
+        <Button
+          type="primary"
+          style={{ marginTop: "15px" }}
+          onClick={() => {
+            if (userData) {
+              handleLogout();
+            } else {
+              navigate("/login");
+            }
+          }}
+        >
+          {userData ? "Logout" : "Login"}
+        </Button>
+      </Header>
 
       <Layout>
         <Content
@@ -73,13 +106,16 @@ const App = () => {
           }}
         >
           <Routes>
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/blogs" element={<BlogPosts />} />
-          <Route path="/login" element={user.user ? <Navigate to="/dashboard" /> : <LoginForm />} />
-          <Route
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/blogs" element={<BlogPosts />} />
+            <Route
+              path="/login"
+              element={userData ? <Navigate to="/blogs" /> : <LoginForm />}
+            />
+            <Route
               path="/"
               element={
-                user?.user ? (
+                userData ? (
                   <ProtectedRoute>
                     <Dashboard />
                   </ProtectedRoute>
@@ -88,33 +124,6 @@ const App = () => {
                 )
               }
             />
-             <Route
-              path="/create"
-              element={
-                user?.user ? (
-                  <ProtectedRoute>
-                    <CreateBlog />
-                  </ProtectedRoute>
-                ) : (
-                  <LoginForm />
-                )
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                user?.user ? (
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                ) : (
-                  <LoginForm />
-                )
-              }
-            />
-            <Route path="/feed" element={<FollowFeed />} />
-
-            <Route path="/blogs/:id" element={<EditBlog />} />
             <Route
               path="/dashboard"
               element={
@@ -128,6 +137,47 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <APIKeyManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/create"
+              element={
+                <ProtectedRoute>
+                  <CreateBlog />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute>
+                  <DisplayUsers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/feed"
+              element={
+                <ProtectedRoute>
+                  <FollowFeed />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/blogs/:id"
+              element={
+                <ProtectedRoute>
+                  <EditBlog />
                 </ProtectedRoute>
               }
             />

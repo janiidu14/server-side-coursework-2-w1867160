@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, List, message, Tag } from "antd";
 import {
   deactivateAPIKey,
@@ -6,7 +6,6 @@ import {
   generateAPIKey,
 } from "../services/apiKeyService";
 import { useAuth } from "../context/AuthContext";
-import { logout } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
 const APIKeyManager = () => {
@@ -80,17 +79,6 @@ const APIKeyManager = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-      message.success("Logged out successfully");
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout error:", error);
-      message.error("Logout failed");
-    }
-  };
-
   return (
     <div>
       <div
@@ -104,9 +92,6 @@ const APIKeyManager = () => {
         <div>
           <Button style={{ marginRight: 10 }} onClick={handleGenerate}>
             Generate Key
-          </Button>
-          <Button type="primary" onClick={handleLogout}>
-            Logout
           </Button>
         </div>
       </div>

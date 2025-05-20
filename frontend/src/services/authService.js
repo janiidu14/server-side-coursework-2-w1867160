@@ -1,7 +1,7 @@
 import { apiInstance, secureApiInstance } from "../api/apiInstance";
 import { HTTP_METHODS } from "../common/constants";
 
-const PATH_URL = "/users";
+const PATH_URL = "/auth";
 
 export const register = async (userData) => {
   return apiInstance
