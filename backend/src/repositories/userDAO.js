@@ -51,7 +51,7 @@ class UserDAO {
     });
   }
 
-  async findAllUsers() {
+  async fetchAllUsers() {
     return new Promise((resolve, reject) => {
       db.all("SELECT * FROM users", [], (err, rows) => {
         if (err) {

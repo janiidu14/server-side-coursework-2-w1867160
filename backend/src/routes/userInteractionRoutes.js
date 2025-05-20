@@ -11,8 +11,11 @@ router.use(csrfProtection);
 
 router.get("/", async (req, res) => {
     try {
+      console.log("userInteractions");
+
       const userInteractionService = new UserInteractionService();
       const userInteractions = await userInteractionService.getAllInteractions();
+      console.log(userInteractions);
   
       res.json(userInteractions);
     } catch (error) {
@@ -49,9 +52,8 @@ router.get("/followers/:userId", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { blogId, type } = req.body;
-    const userId = req.user.id;
-    if (!blogId || !type) {
+    const { followerId, followingId } = req.body;
+    if (!followingId || !followerId) {
       return res
         .status(400)
         .json(
@@ -59,11 +61,32 @@ router.post("/", async (req, res) => {
         );
     }
     const userInteractionService = new UserInteractionService();
-    const userInteraction = await userInteractionService.createInteraction(userId, req.body);
+    const userInteraction = await userInteractionService.createInteraction(followerId, followingId);
     res.json(userInteraction);
   } catch (error) {
     console.error("Error creating user interaction:", error);
     res.status(500).json(createResponse(false, null, "Error creating user interaction"));
+  }
+});
+
+router.delete("/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId
+
+    const { followingId } = req.body;
+    if (!followingId) {
+      return res
+        .status(400)
+        .json(
+          createResponse(false, null, "All fields are required")
+        );
+    }
+    const userInteractionService = new UserInteractionService();
+    const userInteraction = await userInteractionService.deleteInteractionById(userId, followingId);
+    res.json(userInteraction);
+  } catch (error) {
+    console.error("Error deleting user interaction:", error);
+    res.status(500).json(createResponse(false, null, "Error deleting user interaction"));
   }
 });
 

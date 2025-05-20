@@ -8,6 +8,7 @@ const countryRoutes = require("./routes/countryRoutes");
 const blogRoutes = require("./routes/blogRoutes");
 const reactionRoutes = require("./routes/reactionRoutes");
 const interactionRoutes = require("./routes/userInteractionRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const { initializeDB } = require("./models/schema");
 
@@ -27,12 +28,14 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/users", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/api-keys", apiKeyRoutes);
 app.use("/api/countries", countryRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/reactions", reactionRoutes);
 app.use("/api/interactions", interactionRoutes);
+app.use("/api/users", userRoutes);
+
 
 initializeDB();
 

@@ -3,11 +3,11 @@ const { db } = require("../configs/db");
 class UserInteractionDAO {
   constructor() {}
 
-  async createInteraction(followerId, followingId) {
+  async createInteraction(id, followerId, followingId) {
     return new Promise((resolve, reject) => {
       db.run(
-        `INSERT INTO interactions (follower_id, following_id) VALUES (?, ?)`,
-        [followerId, followingId],
+        `INSERT INTO interactions (id, followerId, followingId) VALUES (?, ?, ?)`,
+        [id, followerId, followingId],
         (err) => {
           if (err) {
             return reject(err);
@@ -20,11 +20,12 @@ class UserInteractionDAO {
   }
 
   async getFollowersByUserId(userId) {
+    console.log("getFollowersByUserId", userId);
     return new Promise((resolve, reject) => {
       db.all(
         `SELECT users.id, users.email
-        FROM interactions JOIN users ON interactions.followerid = users.id
-        WHERE interactions.followingid = ?`,
+        FROM interactions JOIN users ON interactions.followerId = users.id
+        WHERE interactions.followingId = ?`,
         [userId],
         (err, rows) => {
           if (err) {
@@ -38,11 +39,12 @@ class UserInteractionDAO {
   }
 
   async getFollowingByUserId(userId) {
+        console.log("getFolloweingByUserId", userId);
     return new Promise((resolve, reject) => {
       db.all(
         `SELECT users.id, users.email
         FROM interactions JOIN users ON interactions.followingid = users.id
-        WHERE interactions.followerid = ?`,
+        WHERE interactions.followerId = ?`,
         [userId],
         (err, rows) => {
           if (err) {
@@ -55,10 +57,10 @@ class UserInteractionDAO {
     });
   }
 
-  async deleteInteractionById() {
+  async deleteInteractionById(followerId, followingId) {
     return new Promise((resolve, reject) => {
       db.all(
-        `DELETE FROM interactions WHERE follower_id = ? AND following_id = ?`,
+        `DELETE FROM interactions WHERE followerId = ? AND followingId = ?`,
         [followerId, followingId],
         (err) => {
           if (err) {

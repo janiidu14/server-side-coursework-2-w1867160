@@ -8,13 +8,13 @@ class UserInteractionService {
     this.userInteractionDAO = new UserInteractionDAO();
   }
 
-  async createInteraction(userId, data) {
+  async createInteraction(userId, followingId) {
     try {
       const id = uuidv4();
       const blog = await this.userInteractionDAO.createInteraction(
         id,
         userId,
-        data
+        followingId
       );
       return createResponse(
         true,
@@ -65,10 +65,11 @@ class UserInteractionService {
     }
   }
 
-  async deleteInteractionById(id) {
+  async deleteInteractionById(userId, followingId) {
     try {
       const interaction = await this.userInteractionDAO.deleteInteractionById(
-        id
+        userId,
+        followingId
       );
       return createResponse(
         true,
