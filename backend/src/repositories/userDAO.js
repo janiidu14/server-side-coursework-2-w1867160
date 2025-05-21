@@ -35,7 +35,7 @@ class UserDAO {
     });
   }
 
-  async findByUserById(id) {
+  async findUserById(id) {
     return new Promise((resolve, reject) => {
       db.get("SELECT * FROM users WHERE id = ?", [id], (err, row) => {
         if (err) {

@@ -46,7 +46,8 @@ router.get("/independent", apiKeyMiddleware, async (req, res) => {
   }
 });
 
-router.get("/name", apiKeyMiddleware, async (req, res) => {
+router.get("/name/:name", apiKeyMiddleware, async (req, res) => {
+  console.log("Fetching country by name");
   try {
     const { name } = req.params;
     if (!name) {

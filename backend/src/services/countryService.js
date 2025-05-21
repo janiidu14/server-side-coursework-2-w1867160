@@ -12,6 +12,7 @@ class CountryService {
       name: country.name.common,
       currency: country.currencies,
       capital: country.capital,
+      code: country.ccn3,
       languages: country.languages,
       flag: country.flags?.png,
     };
@@ -51,6 +52,7 @@ class CountryService {
         params: { fullText },
       });
       const data = response.data.map(this.mapCountryData);
+      console.log(data);
       return createResponse(true, data, "Country fetched by name successfully");
     } catch (error) {
       throw new Error(`Error retrieving country with name: ${name}`);

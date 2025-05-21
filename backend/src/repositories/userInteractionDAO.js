@@ -23,7 +23,7 @@ class UserInteractionDAO {
     console.log("getFollowersByUserId", userId);
     return new Promise((resolve, reject) => {
       db.all(
-        `SELECT users.id, users.email
+        `SELECT *
         FROM interactions JOIN users ON interactions.followerId = users.id
         WHERE interactions.followingId = ?`,
         [userId],
@@ -42,7 +42,7 @@ class UserInteractionDAO {
         console.log("getFolloweingByUserId", userId);
     return new Promise((resolve, reject) => {
       db.all(
-        `SELECT users.id, users.email
+        `SELECT *
         FROM interactions JOIN users ON interactions.followingid = users.id
         WHERE interactions.followerId = ?`,
         [userId],

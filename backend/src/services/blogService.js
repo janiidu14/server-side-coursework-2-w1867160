@@ -37,6 +37,15 @@ class BlogService {
     }
   }
 
+  async getBlogsBySorting(sortBy) {
+    try {
+      const blogs = await this.blogDAO.getAllBlogsWithSort(sortBy);
+      return createResponse(true, blogs, "All blogs fetched successfully");
+    } catch (error) {
+      throw new Error(`Error fetching blogs: ${error.message}`);
+    }
+  }
+
   async updateBlogById(id, data) {
     try {
       const blog = await this.blogDAO.updateBlogById(id, data);

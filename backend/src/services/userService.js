@@ -17,7 +17,7 @@ class UserService {
 
   async fetchUserById(id) {
     try {
-        const user = await this.userDAO.fetchUserById(id);
+        const user = await this.userDAO.findUserById(id);
         return createResponse(true, user, "User fetched successfully");
     } catch (error) {
         throw new Error(`Error fetching user: ${error.message}`);

@@ -18,6 +18,27 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/sort", async (req, res) => {
+  try {
+    const { sortBy } = req.query;
+    // const userId = req.user.id;
+
+    if (!sortBy) {
+      return res
+        .status(400)
+        .json(createResponse(false, null, "SortBy field is required"));
+    }
+
+    const blogService = new BlogService();
+    const blogs = await blogService.getBlogsBySorting(sortBy);
+
+    res.json(blogs);
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    res.status(500).json(createResponse(false, null, "Error fetching blogs"));
+  }
+});
+
 router.use(authenticateJWT);
 router.use(csrfProtection);
 
