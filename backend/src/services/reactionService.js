@@ -8,7 +8,7 @@ class ReactionService {
     this.reactionDAO = new ReactionDAO();
   }
 
-  async reactToBlog (userId, blogId, type) {
+  async reactToBlog(userId, blogId, type) {
     try {
       const id = uuidv4();
       const blog = await this.reactionDAO.createReaction(
@@ -18,64 +18,53 @@ class ReactionService {
         type
       );
 
-      console.log("test", blog)
-
-    //   switch (result) {
-    //     case 'added':
-    //       return { message: 'Reaction added' };
-    //     case 'updated':
-    //       return { message: 'Reaction updated' };
-    //     case 'removed':
-    //       return { message: 'Reaction removed' };
-    //   }
       return createResponse(
         true,
         blog,
-        "User interaction created successfully"
+        "User reaction created successfully"
       );
     } catch (error) {
-      throw new Error(`Error creating user reaction : ${error.message}`);
+      throw new Error(`Error creating user reaction: ${error.message}`);
     }
   }
 
   async getAllReactions() {
-    try{
-      const reactions = await this.reactionDAO.getAllReactions()
-      
-      
-    return createResponse(
+    try {
+      const reactions = await this.reactionDAO.getAllReactions();
+
+      return createResponse(
         true,
         reactions,
-        "All user interactions fetched successfully"
+        "All user reactions fetched successfully"
       );
     } catch (error) {
-      throw new Error(`Error fetching user interactions: ${error.message}`);
+      throw new Error(`Error fetching user reactions: ${error.message}`);
     }
   }
 
-    async getUserReactionToAllBlogs(userId) {
+  async getUserReactionToAllBlogs(userId) {
     try {
       const count = await this.reactionDAO.getAllReactionSummaries(userId);
       return createResponse(
         true,
         count,
-        "User interaction created successfully"
+        "User reaction for all blogs fetched successfully"
       );
     } catch (error) {
-      throw new Error(`Error creating user interaction : ${error.message}`);
+      throw new Error(`Error fetched user reaction: ${error.message}`);
     }
   }
 
-     async getUserReactionToAllBlogsPublic() {
+  async getUserReactionToAllBlogsPublic() {
     try {
       const count = await this.reactionDAO.getUserReactionToAllBlogsPublic();
       return createResponse(
         true,
         count,
-        "User interaction created successfully"
+        "User reaction for public blogs fetched successfully"
       );
     } catch (error) {
-      throw new Error(`Error creating user interaction : ${error.message}`);
+      throw new Error(`Error fetched reaction: ${error.message}`);
     }
   }
 
@@ -85,10 +74,10 @@ class ReactionService {
       return createResponse(
         true,
         count,
-        "User interaction created successfully"
+        "User reaction fetched successfully"
       );
     } catch (error) {
-      throw new Error(`Error creating user interaction : ${error.message}`);
+      throw new Error(`Error fetched reaction: ${error.message}`);
     }
   }
 
@@ -98,10 +87,10 @@ class ReactionService {
       return createResponse(
         true,
         count,
-        "User interaction created successfully"
+        "User reaction fetched successfully"
       );
     } catch (error) {
-      throw new Error(`Error creating user interaction : ${error.message}`);
+      throw new Error(`Error fetched reaction: ${error.message}`);
     }
   }
 }

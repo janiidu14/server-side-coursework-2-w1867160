@@ -20,7 +20,6 @@ class UserInteractionDAO {
   }
 
   async getFollowersByUserId(userId) {
-    console.log("getFollowersByUserId", userId);
     return new Promise((resolve, reject) => {
       db.all(
         `SELECT *
@@ -39,7 +38,6 @@ class UserInteractionDAO {
   }
 
   async getFollowingByUserId(userId) {
-        console.log("getFolloweingByUserId", userId);
     return new Promise((resolve, reject) => {
       db.all(
         `SELECT *

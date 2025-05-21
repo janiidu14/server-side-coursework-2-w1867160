@@ -4,7 +4,6 @@ class ReactionDAO {
   constructor() {}
 
   async createReaction(id, userId, blogId, type) {
-    console.log(id, userId, blogId, type)
     return new Promise((resolve, reject) => {
       db.get(
         "SELECT * FROM reactions WHERE blogId = ? AND userId = ?",
@@ -48,8 +47,8 @@ class ReactionDAO {
   }
 
   async getAllReactions() {
-     return new Promise((resolve, reject) => {
-       db.all("SELECT * FROM reactions", [], (err, rows) => {
+    return new Promise((resolve, reject) => {
+      db.all("SELECT * FROM reactions", [], (err, rows) => {
         if (err) {
           return reject(err);
         }
@@ -60,7 +59,6 @@ class ReactionDAO {
   }
 
   async getReactionCounts(blogId) {
-    const db = await connectDB();
     return new Promise((resolve, reject) => {
       const counts = {};
       db.get(
@@ -85,9 +83,9 @@ class ReactionDAO {
   }
 
   async getAllReactionSummaries(userId) {
-  return new Promise((resolve, reject) => {
-    db.all(
-      `
+    return new Promise((resolve, reject) => {
+      db.all(
+        `
       SELECT
         blogId AS blogId,
         COUNT(CASE WHEN type = 'like' THEN 1 END) AS likes,
@@ -99,19 +97,19 @@ class ReactionDAO {
       FROM reactions r1
       GROUP BY blogId
       `,
-      [userId],
-      (err, rows) => {
-        if (err) return reject(err);
-        resolve(rows);
-      }
-    );
-  });
-}
+        [userId],
+        (err, rows) => {
+          if (err) return reject(err);
+          resolve(rows);
+        }
+      );
+    });
+  }
 
-async getUserReactionToAllBlogsPublic() {
-  return new Promise((resolve, reject) => {
-    db.all(
-      `
+  async getUserReactionToAllBlogsPublic() {
+    return new Promise((resolve, reject) => {
+      db.all(
+        `
       SELECT
         blogId AS blogId,
         COUNT(CASE WHEN type = 'like' THEN 1 END) AS likes,
@@ -119,17 +117,16 @@ async getUserReactionToAllBlogsPublic() {
       FROM reactions
       GROUP BY blogId
       `,
-      [],
-      (err, rows) => {
-        if (err) return reject(err);
-        resolve(rows);
-      }
-    );
-  });
-}
+        [],
+        (err, rows) => {
+          if (err) return reject(err);
+          resolve(rows);
+        }
+      );
+    });
+  }
 
   async getUserReaction(userId, blogId) {
-    const db = await connectDB();
     return new Promise((resolve, reject) => {
       db.get(
         "SELECT type FROM reactions WHERE blog_id = ? AND user_id = ?",

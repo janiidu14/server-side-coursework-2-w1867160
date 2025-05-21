@@ -50,9 +50,9 @@ class BlogDAO {
     return new Promise((resolve, reject) => {
       db.get(
         `SELECT blogs.*, users.email AS author
-    FROM blogs JOIN users ON blogs.userId = users.id
-    WHERE blogs.id = ?
-  `,
+        FROM blogs JOIN users ON blogs.userId = users.id
+        WHERE blogs.id = ?
+      `,
         [id],
         (err, row) => {
           if (err) {
@@ -73,9 +73,9 @@ class BlogDAO {
     return new Promise((resolve, reject) => {
       db.run(
         `
-    UPDATE blogs SET title = ?, content = ?, country = ?, updatedAt = datetime('now')
-    WHERE id = ?
-  `,
+        UPDATE blogs SET title = ?, content = ?, country = ?, updatedAt = datetime('now')
+        WHERE id = ?
+      `,
         [data.title, data.content, data.country, id],
         (err) => {
           if (err) {
@@ -100,7 +100,7 @@ class BlogDAO {
     });
   }
 
-    async getAllBlogsWithSort(userId, sort = "newest") {
+  async getAllBlogsWithSort(userId, sort = "newest") {
     const orderBy =
       {
         newest: "b.created_at DESC",
@@ -117,13 +117,13 @@ class BlogDAO {
         (
           SELECT type FROM reactions r2 WHERE r2.blogId = b.id
         ) AS myReaction
-      FROM blogs b
-      JOIN users u ON b.userId = u.id
-      LEFT JOIN reactions r ON r.blogId = b.id
-      LEFT JOIN comments c ON c.blogId = b.id
-      GROUP BY b.id
-      ORDER BY ${orderBy}
-      `,
+        FROM blogs b
+        JOIN users u ON b.userId = u.id
+        LEFT JOIN reactions r ON r.blogId = b.id
+        LEFT JOIN comments c ON c.blogId = b.id
+        GROUP BY b.id
+        ORDER BY ${orderBy}
+        `,
         [userId],
         (err, rows) => {
           if (err) return reject(err);

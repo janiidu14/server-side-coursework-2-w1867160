@@ -41,7 +41,9 @@ class UserInteractionService {
 
   async getFollowingByUserId(userId) {
     try {
-      const interactions = await this.userInteractionDAO.getFollowingByUserId(userId);
+      const interactions = await this.userInteractionDAO.getFollowingByUserId(
+        userId
+      );
       return createResponse(
         true,
         interactions,
@@ -54,7 +56,9 @@ class UserInteractionService {
 
   async getFollowersByUserId(userId) {
     try {
-      const interactions = await this.userInteractionDAO.getFollowersByUserId(userId);
+      const interactions = await this.userInteractionDAO.getFollowersByUserId(
+        userId
+      );
       return createResponse(
         true,
         interactions,

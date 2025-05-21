@@ -56,23 +56,22 @@ class APIKeyDAO {
           if (err1) {
             return reject(err1);
           }
-        
 
           db.run(
-        "INSERT INTO api_keys (id, userId, apiKey) VALUES (?, ?, ?)",
-        [id, userId, apiKey],
-        (err) => {
-          if (err) {
-            return reject(err);
-          }
+            "INSERT INTO api_keys (id, userId, apiKey) VALUES (?, ?, ?)",
+            [id, userId, apiKey],
+            (err) => {
+              if (err) {
+                return reject(err);
+              }
 
-          resolve(true);
+              resolve(true);
+            }
+          );
         }
       );
-    }
-  );
-});
-}
+    });
+  }
 
   async validateKey(key) {
     return new Promise((resolve, reject) => {

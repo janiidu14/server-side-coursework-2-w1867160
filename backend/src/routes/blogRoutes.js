@@ -21,7 +21,6 @@ router.get("/", async (req, res) => {
 router.get("/sort", async (req, res) => {
   try {
     const { sortBy } = req.query;
-    // const userId = req.user.id;
 
     if (!sortBy) {
       return res
@@ -34,8 +33,10 @@ router.get("/sort", async (req, res) => {
 
     res.json(blogs);
   } catch (error) {
-    console.error("Error fetching blogs:", error);
-    res.status(500).json(createResponse(false, null, "Error fetching blogs"));
+    console.error("Error fetching sorted blogs:", error);
+    res
+      .status(500)
+      .json(createResponse(false, null, "Error fetching sorted blogs"));
   }
 });
 
@@ -50,9 +51,7 @@ router.post("/", async (req, res) => {
     if (!title || !content || !country || !visitDate) {
       return res
         .status(400)
-        .json(
-          createResponse(false, null, "All fields are required")
-        );
+        .json(createResponse(false, null, "All fields are required"));
     }
 
     const blogService = new BlogService();
@@ -67,41 +66,47 @@ router.post("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const blogId = req.params.id
+    const blogId = req.params.id;
     const blogService = new BlogService();
     const blog = await blogService.getBlogById(blogId);
 
     res.json(blog);
   } catch (error) {
-    console.error("Error fetching blog by id:", error);
-    res.status(500).json(createResponse(false, null, "Error fetching blog by id"));
+    console.error("Error fetching blog by id", error);
+    res
+      .status(500)
+      .json(createResponse(false, null, "Error fetching blog by id"));
   }
 });
 
 router.put("/:id", async (req, res) => {
   try {
-    const blogId = req.params.id
+    const blogId = req.params.id;
 
     const blogService = new BlogService();
     const blog = await blogService.updateBlogById(blogId, req.body);
 
     res.json(blog);
   } catch (error) {
-    console.error("Error fetching blog by id:", error);
-    res.status(500).json(createResponse(false, null, "Error fetching blog by id"));
+    console.error("Error updating blog by id", error);
+    res
+      .status(500)
+      .json(createResponse(false, null, "Error updating blog by id"));
   }
 });
 
 router.delete("/:id", async (req, res) => {
   try {
-    const blogId = req.params.id
+    const blogId = req.params.id;
     const blogService = new BlogService();
     const blog = await blogService.deleteBlogById(blogId);
 
     res.json(blog);
   } catch (error) {
     console.error("Error deleting blog by id:", error);
-    res.status(500).json(createResponse(false, null, "Error deleting blog by id"));
+    res
+      .status(500)
+      .json(createResponse(false, null, "Error deleting blog by id"));
   }
 });
 

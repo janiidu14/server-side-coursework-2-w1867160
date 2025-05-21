@@ -52,7 +52,6 @@ class CountryService {
         params: { fullText },
       });
       const data = response.data.map(this.mapCountryData);
-      console.log(data);
       return createResponse(true, data, "Country fetched by name successfully");
     } catch (error) {
       throw new Error(`Error retrieving country with name: ${name}`);

@@ -53,7 +53,7 @@ const initializeDB = () => {
     );
 
     db.run(
-        `CREATE TABLE IF NOT EXISTS reactions (
+      `CREATE TABLE IF NOT EXISTS reactions (
                 id TEXT PRIMARY KEY,
                 blogId TEXT NOT NULL,
                 userId TEXT NOT NULL,
@@ -64,14 +64,14 @@ const initializeDB = () => {
                 FOREIGN KEY (blogId) REFERENCES blogs(id) ON DELETE CASCADE,
                 FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
     );`,
-        (err) => {
-          if (err) console.error("Error creating reactions table:", err.message);
-          else console.info("Reactions table ready");
-        }
-      );
+      (err) => {
+        if (err) console.error("Error creating reactions table:", err.message);
+        else console.info("Reactions table ready");
+      }
+    );
 
-      db.run(
-        `CREATE TABLE IF NOT EXISTS interactions (
+    db.run(
+      `CREATE TABLE IF NOT EXISTS interactions (
                 id TEXT PRIMARY KEY,
                 followerId TEXT NOT NULL,
                 followingId TEXT NOT NULL,
@@ -80,14 +80,15 @@ const initializeDB = () => {
                 FOREIGN KEY (followerId) REFERENCES users(id) ON DELETE CASCADE,
                 FOREIGN KEY (followingId) REFERENCES users(id) ON DELETE CASCADE
     );`,
-        (err) => {
-          if (err) console.error("Error creating interactions table:", err.message);
-          else console.info("Interactions table ready");
-        }
-      );
+      (err) => {
+        if (err)
+          console.error("Error creating interactions table:", err.message);
+        else console.info("Interactions table ready");
+      }
+    );
   });
 };
 
 module.exports = {
-    initializeDB
-  };
+  initializeDB,
+};

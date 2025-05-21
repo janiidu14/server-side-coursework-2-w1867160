@@ -11,7 +11,6 @@ class BlogService {
   async createBlog(userId, data) {
     try {
       const id = uuidv4();
-      console.log(data)
       const blog = await this.blogDAO.createBlog(id, userId, data);
       return createResponse(true, blog, "Blog created successfully");
     } catch (error) {
@@ -40,9 +39,9 @@ class BlogService {
   async getBlogsBySorting(sortBy) {
     try {
       const blogs = await this.blogDAO.getAllBlogsWithSort(sortBy);
-      return createResponse(true, blogs, "All blogs fetched successfully");
+      return createResponse(true, blogs, "All sorted blogs fetched successfully");
     } catch (error) {
-      throw new Error(`Error fetching blogs: ${error.message}`);
+      throw new Error(`Error fetching sorted blogs: ${error.message}`);
     }
   }
 
@@ -63,8 +62,6 @@ class BlogService {
       throw new Error(`Error deleting blog: ${error.message}`);
     }
   }
-
-
 }
 
 module.exports = BlogService;
