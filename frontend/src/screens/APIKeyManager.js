@@ -6,13 +6,11 @@ import {
   generateAPIKey,
 } from "../services/apiKeyService";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const APIKeyManager = () => {
   const [apiKeys, setAPIKeys] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   const userData = user?.data || null;
 
@@ -21,7 +19,7 @@ const APIKeyManager = () => {
       setLoading(true);
 
       if (!userData) {
-        message.error("User not authenticated");
+        message.error("User Not Authenticated");
         return;
       }
 
@@ -108,11 +106,16 @@ const APIKeyManager = () => {
         }}
       >
         This dashboard is used to track API key usage. Users can generate new
-        keys and deactivate existing ones. Only one active key is
-        allowed per user. Generating a new key will automatically deactivate the
-        currently active one. <br/>
-        <Tag color="blue">API keys are shown by their ID and not the actual API key</Tag>
-        <Tag color="red">Without an active API key, access to the Rest Countries Dashboard is restricted.</Tag>
+        keys and deactivate existing ones. Only one active key is allowed per
+        user. Generating a new key will automatically deactivate the currently
+        active one. <br />
+        <Tag color="blue">
+          API keys are shown by their ID and not the actual API key
+        </Tag>
+        <Tag color="red">
+          Without an active API key, access to the Rest Countries Dashboard is
+          restricted.
+        </Tag>
       </div>
 
       <Card>

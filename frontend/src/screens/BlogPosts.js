@@ -11,7 +11,6 @@ import {
   Tooltip,
   Tag,
   Pagination,
-  Tabs,
 } from "antd";
 import { LikeOutlined, DislikeOutlined } from "@ant-design/icons";
 
@@ -24,10 +23,8 @@ import {
   fetchReactionsToAllBlogsPublic,
 } from "../services/reactionService";
 import { fetchFollowingByUserId } from "../services/userInteractionService";
+
 const { Option } = Select;
-
-const { TabPane } = Tabs;
-
 const { Paragraph } = Typography;
 
 const BlogPosts = () => {
@@ -36,7 +33,7 @@ const BlogPosts = () => {
   const [filterType, setFilterType] = useState("country");
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-const [showFollowing, setShowFollowing] = useState(false);
+  const [showFollowing, setShowFollowing] = useState(false);
   const [followingIds, setFollowingIds] = useState([]);
 
   const pageSize = 6;
@@ -64,7 +61,6 @@ const [showFollowing, setShowFollowing] = useState(false);
 
       const enriched = blogsRes.data.map((blog) => {
         const r = reactionsRes.data.find((x) => x.blogId === blog.id) || {};
-        console.log("r", r);
         return {
           ...blog,
           likes: r.likes || 0,
@@ -73,9 +69,8 @@ const [showFollowing, setShowFollowing] = useState(false);
         };
       });
       const visibleBlogs = showFollowing
-  ? enriched.filter((b) => followingIds.includes(b.userId))
-  : enriched;
-console.log("v", visibleBlogs)
+        ? enriched.filter((b) => followingIds.includes(b.userId))
+        : enriched;
 
       setBlogs(visibleBlogs);
       setFiltered(visibleBlogs);
@@ -85,17 +80,15 @@ console.log("v", visibleBlogs)
   };
 
   const handleFetchUserFollowing = async () => {
-        try {
-  
-          const followingRes = await 
-            fetchFollowingByUserId(userData?.id);
-  
-          setFollowingIds(followingRes.data.map((u) => u.id));
-        } catch (err) {
-          message.error('Failed to load users');
-          console.error(err);
-        } 
-      };
+    try {
+      const followingRes = await fetchFollowingByUserId(userData?.id);
+
+      setFollowingIds(followingRes.data.map((u) => u.id));
+    } catch (err) {
+      message.error("Failed to load users");
+      console.error(err);
+    }
+  };
 
   const handleEdit = (blogId) => {
     navigate(`/blogs/${blogId}`);
@@ -126,7 +119,7 @@ console.log("v", visibleBlogs)
   };
 
   const handleSortChange = (value) => {
-    let sorted = [...blogs]; 
+    let sorted = [...blogs];
 
     if (value === "newest") {
       sorted.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -173,10 +166,10 @@ console.log("v", visibleBlogs)
     handleFetchBlogs();
   }, [showFollowing]);
 
-    useEffect(() => {
+  useEffect(() => {
     handleFetchBlogs();
     if (userData) {
-    handleFetchUserFollowing();
+      handleFetchUserFollowing();
     }
   }, []);
 
@@ -192,14 +185,16 @@ console.log("v", visibleBlogs)
         <h2>Blog Posts</h2>
         <div>
           {userData && (
-                <div style={{ display: "flex", gap: 8 }}>
-            <Button type="primary" onClick={() => navigate("/create")}>
-              Create Blog
-            </Button>
-             <Button type="primary"   onClick={() => setShowFollowing((prev) => !prev)}
->
-  {showFollowing ? 'Show All Blogs' : 'Show Following Blogs'}
-            </Button>
+            <div style={{ display: "flex", gap: 8 }}>
+              <Button type="primary" onClick={() => navigate("/create-blog")}>
+                Create Blog
+              </Button>
+              <Button
+                type="primary"
+                onClick={() => setShowFollowing((prev) => !prev)}
+              >
+                {showFollowing ? "Show All Blogs" : "Show Following Blogs"}
+              </Button>
             </div>
           )}
         </div>
@@ -264,7 +259,7 @@ console.log("v", visibleBlogs)
                     <LikeOutlined
                       style={{
                         color:
-                          userReaction(blog) === "like" ? "green" : undefined,
+                          userReaction(blog) === "like" ? "orange" : undefined,
                       }}
                     />{" "}
                     {countReactions(blog, "likes")}
@@ -292,7 +287,7 @@ console.log("v", visibleBlogs)
                 <strong>Country:</strong> {blog.country || "N/A"}
               </Paragraph>
               <Paragraph>{blog.content}</Paragraph>
-                 <Paragraph>
+              <Paragraph>
                 <strong>Visited On:</strong>{" "}
                 <Tag color="green">{blog.visitDate || "N/A"}</Tag>
               </Paragraph>
@@ -319,13 +314,13 @@ console.log("v", visibleBlogs)
           </Col>
         ))}
       </Row>
-       <Pagination
-      current={currentPage}
-      pageSize={pageSize}
-      total={filtered.length}
-      onChange={(page) => setCurrentPage(page)}
-      style={{ textAlign: 'center', marginTop: 24 }}
-    />
+      <Pagination
+        current={currentPage}
+        pageSize={pageSize}
+        total={filtered.length}
+        onChange={(page) => setCurrentPage(page)}
+        style={{ textAlign: "center", marginTop: 24 }}
+      />
     </>
   );
 };

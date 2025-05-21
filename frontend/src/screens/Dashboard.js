@@ -1,33 +1,20 @@
-import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Row,
-  Col,
-  Spin,
-  Select,
-  Button,
-  message,
-  Typography,
-} from "antd";
+import { useEffect, useState } from "react";
+import { Card, Row, Col, Spin, Select, message, Typography } from "antd";
 import {
   fetchCountries,
   fetchCountryDetailsByName,
 } from "../services/countryService";
-import { logout } from "../services/authService";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { v4 as uuidv4 } from "uuid";
 
 const { Option } = Select;
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 const Dashboard = () => {
   const [countries, setCountries] = useState(null);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [selected, setSelected] = useState(null);
-
-  const navigate = useNavigate();
 
   const { user } = useAuth();
   const userData = user?.data || null;
@@ -38,6 +25,8 @@ const Dashboard = () => {
 
       let data = [];
       try {
+        setSelected(null)
+
         if (filter === "all") {
           data = await fetchCountries("all", userData?.id);
         } else if (filter === "independent") {
@@ -89,6 +78,7 @@ const Dashboard = () => {
           />
           {countries && (
             <Select
+              allowClear
               showSearch
               placeholder="Select a country"
               style={{ width: 300, marginBottom: 24 }}

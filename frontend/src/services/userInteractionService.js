@@ -14,7 +14,7 @@ export const createUserInteraction = async (data) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to create blog.", error.message);
+      console.error("Failed to create user interaction.", error.message);
       throw error;
     });
 };
@@ -22,14 +22,14 @@ export const createUserInteraction = async (data) => {
 export const fetchFollowingByUserId = async (userId) => {
   return secureApiInstance
     .request({
-        url: `${PATH_URL}/following/${userId}`,
+      url: `${PATH_URL}/following/${userId}`,
       method: HTTP_METHODS.GET,
     })
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to fetch f.", error.message);
+      console.error("Failed to fetch user interaction.", error.message);
       throw error;
     });
 };
@@ -37,47 +37,30 @@ export const fetchFollowingByUserId = async (userId) => {
 export const fetchFollowersByUserId = async (userId) => {
   return secureApiInstance
     .request({
-        url: `${PATH_URL}/followers/${userId}`,
-        method: HTTP_METHODS.GET,
+      url: `${PATH_URL}/followers/${userId}`,
+      method: HTTP_METHODS.GET,
     })
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to fetch blog by id.", error.message);
-      throw error;
-    });
-}
-
-
-export const updateBlogById = async (id, data) => {
-  return secureApiInstance
-    .request({
-      url: `${PATH_URL}/${id}`,
-      method: HTTP_METHODS.PUT,
-      data: data
-    })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      console.error("Failed to update blog by id.", error.message);
+      console.error("Failed to fetch user interaction.", error.message);
       throw error;
     });
 };
 
 export const deleteInteractionByUserId = async (id, data) => {
-    return secureApiInstance
-      .request({
-        url: `${PATH_URL}/${id}`,
-        method: HTTP_METHODS.DELETE,
-        data: data
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        console.error("Failed to delete blog by id.", error.message);
-        throw error;
-      });
-  };
+  return secureApiInstance
+    .request({
+      url: `${PATH_URL}/${id}`,
+      method: HTTP_METHODS.DELETE,
+      data: data,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Failed to delete user interaction.", error.message);
+      throw error;
+    });
+};

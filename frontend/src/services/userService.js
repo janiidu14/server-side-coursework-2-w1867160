@@ -19,18 +19,16 @@ export const fetchUsers = async () => {
 };
 
 export const fetchUserById = async (id) => {
-    return secureApiInstance
-        .request({
-        url: `${PATH_URL}/${id}`,
-        method: HTTP_METHODS.GET,
-        })
-        .then((response) => {
-        return response.data;
-        })
-        .catch((error) => {
-        console.error("Failed to fetch user by id.", error.message);
-        throw error;
-        });
-    }
-    
-
+  return secureApiInstance
+    .request({
+      url: `${PATH_URL}/${id}`,
+      method: HTTP_METHODS.GET,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Failed to fetch user by id.", error.message);
+      throw error;
+    });
+};

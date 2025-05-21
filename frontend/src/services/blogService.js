@@ -4,7 +4,6 @@ import { HTTP_METHODS } from "../common/constants";
 const PATH_URL = "/blogs";
 
 export const createBlog = async (data) => {
-  console.log(data)
   return secureApiInstance
     .request({
       url: PATH_URL,
@@ -48,15 +47,14 @@ export const fetchBlogById = async (id) => {
       console.error("Failed to fetch blog by id.", error.message);
       throw error;
     });
-}
-
+};
 
 export const updateBlogById = async (id, data) => {
   return secureApiInstance
     .request({
       url: `${PATH_URL}/${id}`,
       method: HTTP_METHODS.PUT,
-      data: data
+      data: data,
     })
     .then((response) => {
       return response.data;
@@ -68,16 +66,16 @@ export const updateBlogById = async (id, data) => {
 };
 
 export const deleteBlogById = async (id) => {
-    return secureApiInstance
-      .request({
-        url: `${PATH_URL}/${id}`,
-        method: HTTP_METHODS.DELETE
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        console.error("Failed to delete blog by id.", error.message);
-        throw error;
-      });
-  };
+  return secureApiInstance
+    .request({
+      url: `${PATH_URL}/${id}`,
+      method: HTTP_METHODS.DELETE,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Failed to delete blog by id.", error.message);
+      throw error;
+    });
+};

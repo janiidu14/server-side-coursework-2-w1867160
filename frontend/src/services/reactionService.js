@@ -14,7 +14,7 @@ export const createReaction = async (data) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to create blog.", error.message);
+      console.error("Failed to create user reaction.", error.message);
       throw error;
     });
 };
@@ -22,30 +22,29 @@ export const createReaction = async (data) => {
 export const fetchReactions = async () => {
   return secureApiInstance
     .request({
-        url: `${PATH_URL}`,
+      url: `${PATH_URL}`,
       method: HTTP_METHODS.GET,
     })
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to fetch f.", error.message);
+      console.error("Failed to fetch user reactions.", error.message);
       throw error;
     });
 };
 
-
 export const fetchReactionsToAllBlogs = async () => {
   return secureApiInstance
     .request({
-        url: `${PATH_URL}/blogs`,
+      url: `${PATH_URL}/blogs`,
       method: HTTP_METHODS.GET,
     })
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to fetch f.", error.message);
+      console.error("Failed to fetch user reactions to blogs.", error.message);
       throw error;
     });
 };
@@ -53,62 +52,14 @@ export const fetchReactionsToAllBlogs = async () => {
 export const fetchReactionsToAllBlogsPublic = async () => {
   return apiInstance
     .request({
-        url: `${PATH_URL}/public`,
+      url: `${PATH_URL}/blogs/public`,
       method: HTTP_METHODS.GET,
     })
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to fetch f.", error.message);
+      console.error("Failed to fetch user reactions to public blogs.", error.message);
       throw error;
     });
 };
-
-export const fetchFollowersByUserId = async (userId) => {
-  return secureApiInstance
-    .request({
-        url: `${PATH_URL}/followers/${userId}`,
-        method: HTTP_METHODS.GET,
-    })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      console.error("Failed to fetch blog by id.", error.message);
-      throw error;
-    });
-}
-
-
-export const updateBlogById = async (id, data) => {
-  return secureApiInstance
-    .request({
-      url: `${PATH_URL}/${id}`,
-      method: HTTP_METHODS.PUT,
-      data: data
-    })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      console.error("Failed to update blog by id.", error.message);
-      throw error;
-    });
-};
-
-export const deleteInteractionByUserId = async (id, data) => {
-    return secureApiInstance
-      .request({
-        url: `${PATH_URL}/${id}`,
-        method: HTTP_METHODS.DELETE,
-        data: data
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        console.error("Failed to delete blog by id.", error.message);
-        throw error;
-      });
-  };

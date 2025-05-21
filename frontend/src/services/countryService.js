@@ -36,7 +36,7 @@ export const fetchCountryDetailsByName = async (name, userId) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to fetch country details", error.message);
+      console.error("Failed to fetch country details by name", error.message);
       throw error;
     });
-}
+};

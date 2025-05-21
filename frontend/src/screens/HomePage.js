@@ -46,41 +46,40 @@ const HomePage = () => {
       <div style={{ backgroundColor: "#fefefe" }}>
         <Row justify="center">
           <Col xs={24} md={20} lg={24} style={{ textAlign: "center" }}>
-<Card
-  style={{
-    background: '#fafafa',
-    padding: '40px',
-    borderRadius: '16px',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.06)'
-  }}
->
-  <Title level={2} style={{ textAlign: 'center' }}>
-    🌍 Welcome to <span style={{ color: '#1890ff' }}>TravelTales</span>
-  </Title>
-              <Paragraph style={{ fontSize: '16px' }}>
-              A vibrant community-driven platform where wanderlust meets
-              storytelling. Share your travel stories and connect with fellow
-              explorers around the world all enhanced with live country
-              insights.
-            </Paragraph>
-
-            <Paragraph style={{ fontSize: '16px' }}>
-              TravelTales transforms traditional blogging by enriching your
-              stories with real country data from national flags to currencies
-              and capital cities. Whether it’s the streets of Tokyo or the
-              beaches of Bali, every blog captures more than memories.
-            </Paragraph>
-             <Button
-              type="primary"
-              size="large"
-              style={{ width: 180, marginTop: 24 }}
-              onClick={() => navigate("/blogs")}
+            <Card
+              style={{
+                background: "#fafafa",
+                padding: "40px",
+                borderRadius: "16px",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.06)",
+              }}
             >
-              Start Exploring
-            </Button>
-</Card>
+              <Title level={2} style={{ textAlign: "center" }}>
+                🌍 Welcome to{" "}
+                <span style={{ color: "#1890ff" }}>TravelTales</span>
+              </Title>
+              <Paragraph style={{ fontSize: "16px" }}>
+                A vibrant community-driven platform where wanderlust meets
+                storytelling. Share your travel stories and connect with fellow
+                explorers around the world all enhanced with live country
+                insights.
+              </Paragraph>
 
-           
+              <Paragraph style={{ fontSize: "16px" }}>
+                TravelTales transforms traditional blogging by enriching your
+                stories with real country data from national flags to currencies
+                and capital cities. Whether it’s the streets of Tokyo or the
+                beaches of Bali, every blog captures more than memories.
+              </Paragraph>
+              <Button
+                type="primary"
+                size="large"
+                style={{ width: 180, marginTop: 24 }}
+                onClick={() => navigate("/blogs")}
+              >
+                Start Exploring
+              </Button>
+            </Card>
           </Col>
         </Row>
       </div>

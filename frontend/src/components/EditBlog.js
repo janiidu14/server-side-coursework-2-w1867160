@@ -1,11 +1,8 @@
-// pages/EditBlog.js
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Typography, Spin, message } from 'antd';
-// import axios from '../api/axios';
-import { mockBlogs } from '../common/constants';
-import BlogForm from './BlogForm';
-import { fetchBlogById } from '../services/blogService';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Typography, Spin, message } from "antd";
+import BlogForm from "./BlogForm";
+import { fetchBlogById } from "../services/blogService";
 
 const { Title } = Typography;
 
@@ -21,7 +18,7 @@ const EditBlog = () => {
         setBlog(res.data);
         setLoading(false);
       } catch {
-        message.error('Blog not found');
+        message.error("Blog Not Found");
       }
     };
 

@@ -136,7 +136,7 @@ const App = () => {
               }
             />
             <Route
-              path="/create"
+              path="/create-blog"
               element={
                 <ProtectedRoute>
                   <CreateBlog />
