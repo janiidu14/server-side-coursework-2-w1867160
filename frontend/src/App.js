@@ -15,9 +15,9 @@ import BlogPosts from "./screens/BlogPosts.js";
 import EditBlog from "./components/EditBlog.js";
 import CreateBlog from "./components/CreateBlog.js";
 import ProfilePage from "./screens/ProfilePage.js";
-import FollowFeed from "./screens/FollowFeed.js";
 import DisplayUsers from "./screens/DisplayUsers.js";
 import { logout } from "./services/authService.js";
+import HomePage from "./screens/HomePage.js";
 
 const { Content, Footer, Header } = Layout;
 
@@ -47,20 +47,25 @@ const App = () => {
     {
       key: "1",
       icon: <HomeOutlined />,
-      label: "Blogs",
+      label: "Home",
     },
     {
       key: "2",
+      icon: <HomeOutlined />,
+      label: "Blogs",
+    },
+    {
+      key: "3",
       icon: <DashboardOutlined />,
       label: "Admin",
     },
     {
-      key: "3",
+      key: "4",
       icon: <HomeOutlined />,
       label: "Dashboard",
     },
     {
-      key: "4",
+      key: "5",
       icon: <UserOutlined />,
       label: "Profile",
     },
@@ -75,10 +80,11 @@ const App = () => {
           mode="horizontal"
           items={items}
           onClick={({ key }) => {
-            if (key === "1") navigate("/blogs");
-            if (key === "2") navigate("/admin");
-            if (key === "3") navigate("/dashboard");
-            if (key === "4") navigate("/profile");
+            if (key === "1") navigate("/");
+            if (key === "2") navigate("/blogs");
+            if (key === "3") navigate("/admin");
+            if (key === "4") navigate("/dashboard");
+            if (key === "5") navigate("/profile");
           }}
         />
         <Button
@@ -106,23 +112,12 @@ const App = () => {
           }}
         >
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/blogs" element={<BlogPosts />} />
             <Route
               path="/login"
               element={userData ? <Navigate to="/blogs" /> : <LoginForm />}
-            />
-            <Route
-              path="/"
-              element={
-                userData ? (
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                ) : (
-                  <LoginForm />
-                )
-              }
             />
             <Route
               path="/dashboard"
@@ -161,14 +156,6 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <DisplayUsers />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/feed"
-              element={
-                <ProtectedRoute>
-                  <FollowFeed />
                 </ProtectedRoute>
               }
             />

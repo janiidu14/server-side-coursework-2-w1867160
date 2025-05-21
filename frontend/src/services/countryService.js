@@ -21,3 +21,22 @@ export const fetchCountries = async (filter, userId) => {
       throw error;
     });
 };
+
+export const fetchCountryDetailsByName = async (name, userId) => {
+  return secureApiInstance
+    .request({
+      url: `${PATH_URL}/name/${name}`,
+      method: HTTP_METHODS.GET,
+      headers: {
+        ...secureApiInstance.defaults.headers.common,
+        "user-id": userId,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Failed to fetch country details", error.message);
+      throw error;
+    });
+}

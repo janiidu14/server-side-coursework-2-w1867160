@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { List, Typography, Button, Card, message } from 'antd';
+import { List, Typography, Button, Card, message, Tag, Avatar, Col, Row } from 'antd';
 import { fetchFollowersByUserId, fetchFollowingByUserId } from '../services/userInteractionService';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import Paragraph from 'antd/es/skeleton/Paragraph';
 import { fetchUserById } from '../services/userService';
-
-const { Title } = Typography;
+import {
+  UserOutlined
+} from "@ant-design/icons";
+const { Title, Paragraph } = Typography;
 
 const ProfilePage = () => {
   const [followers, setFollowers] = useState([]);
@@ -23,9 +24,9 @@ const ProfilePage = () => {
   const handleFetchUser = async () => {
     try{
       const userData = await fetchUserById(user?.data?.id);
-      setCurrentUser(userData)
+      setCurrentUser(userData?.data)
     } catch {
-      message.error("Failed to fetch blogs");
+      message.error("Failed to fetch user");
     }
   }
 
@@ -70,28 +71,70 @@ const ProfilePage = () => {
   </Button>
         </div>
       </div>
-      <Card>
-         <Paragraph>
-              <strong>Country:</strong> {"blog.country "|| "N/A"}
-            </Paragraph>
+      <Card           style={{ textAlign: 'center' }}
+>
+
+                          <Avatar
+            size={64}
+            icon={<UserOutlined />}
+            style={{ marginBottom: 16 }}
+          />
+          <p>
+           <Tag color="blue">Name </Tag><strong>{currentUser?.name} </strong>
+          </p>
+          <p>
+           <Tag color="blue">Email </Tag><strong>{currentUser?.email} </strong>
+          </p>
+          <p>
+           <Tag color="blue">Created On </Tag><strong>{currentUser?.createdAt} </strong>
+          </p>
       </Card>
       <Title level={4}>Followers</Title>
-      <List
-        bordered
-        dataSource={followers}
-        renderItem={u => <List.Item>{u.name} ({u.email})</List.Item>}
-      />
+      <Row gutter={[16, 16]}>
+  {followers.map((user) => (
+    <Col key={user.id} xs={24} sm={12} md={8} lg={6}>
+      <Card
+        title={user?.name}
+        style={{ textAlign: 'center' }}
+      >
+        <Avatar
+          icon={<UserOutlined />}
+          size={64}
+          style={{ marginBottom: 16 }}
+        />
+                 <p>
+                     <Tag color="blue">Name </Tag><strong>{user?.name} </strong>
+                    </p>
+                      <p>
+                     <Tag color="blue">Email </Tag><strong>{user?.email} </strong>
+                    </p>
+      </Card>
+    </Col>
+  ))}
+</Row>
 
       <Title level={4}>Following</Title>
-      <List
-        bordered
-        dataSource={following}
-        renderItem={u => (
-          <List.Item>
-            {u.name} ({u.email})
-          </List.Item>
-        )}
-      />
+      <Row gutter={[16, 16]}>
+  {following.map((user) => (
+    <Col key={user.id} xs={24} sm={12} md={8} lg={6}>
+      <Card
+        title={user?.name}
+        style={{ textAlign: 'center' }}
+      >
+        <Avatar
+          icon={<UserOutlined />}
+          size={64}
+          style={{ marginBottom: 16 }}
+        />     <p>
+                     <Tag color="blue">Name </Tag><strong>{user?.name} </strong>
+                    </p>
+                      <p>
+                     <Tag color="blue">Email </Tag><strong>{user?.email} </strong>
+                    </p>
+      </Card>
+    </Col>
+  ))}
+</Row>
     </>
   );
 };

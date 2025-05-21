@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { List, Typography, Tag, Spin, message, Button } from 'antd';
+import { List, Typography, Tag, Spin, message, Button, Card, Avatar, Row, Col } from 'antd';
 import { fetchUsers } from '../services/userService';
 import { useAuth } from '../context/AuthContext';
 import { createUserInteraction, deleteInteractionByUserId, fetchFollowingByUserId } from '../services/userInteractionService';
+import {
+  UserOutlined
+} from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -20,7 +23,6 @@ const DisplayUsers = () => {
     const fetchData = async () => {
       try {
 
-        // Fetch all users and current user's following list
         const [usersRes, followingRes] = await Promise.all([
           fetchUsers(),
           fetchFollowingByUserId(currentUserId)
@@ -71,32 +73,49 @@ const DisplayUsers = () => {
 
   return (
     <>
-      <Title level={2}>Discover Users</Title>
-      <List
-        bordered
-        dataSource={users}
-        renderItem={(user) => {
-          const isFollowing = followingIds.includes(user.id);
-
-          return (
-            <List.Item
-              actions={[
-                isFollowing ? (
-                  <Button type="default" onClick={() => handleUnfollow(user.id)}>
-                    Unfollow
-                  </Button>
-                ) : (
-                  <Button type="primary" onClick={() => handleFollow(user.id)}>
-                    Follow
-                  </Button>
-                ),
-              ]}
-            >
-              Name: <Tag>{user.name}</Tag> | Email: <Tag>{user.email}</Tag>
-            </List.Item>
-          );
+        <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
-      />
+      >
+        <h2>User Feed</h2>
+        </div>
+    <Row gutter={[16, 16]}>
+  {users.map((user) => {
+    const isFollowing = followingIds.includes(user?.id);
+
+    return (
+      <Col key={user.id} xs={24} sm={12} md={8} lg={6}>
+        <Card
+          title={user?.name}
+          style={{ textAlign: 'center' }}
+          actions={[
+            isFollowing ? (
+              <Button onClick={() => handleUnfollow(user?.id)}>Unfollow</Button>
+            ) : (
+              <Button type="primary" onClick={() => handleFollow(user?.id)}>Follow</Button>
+            )
+          ]}
+        >
+          <Avatar
+            size={64}
+            icon={<UserOutlined />}
+            style={{ marginBottom: 16 }}
+          />
+            <p>
+           <Tag color="blue">Name </Tag><strong>{user?.name} </strong>
+          </p>
+            <p>
+           <Tag color="blue">Email </Tag><strong>{user?.email} </strong>
+          </p>
+           
+        </Card>
+      </Col>
+    );
+  })}
+</Row>
     </>
   );
 };

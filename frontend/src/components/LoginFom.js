@@ -11,7 +11,7 @@ const LoginForm = () => {
 
       if (res?.success) {
         message.success("Login Successful");
-        navigate("/blogs");
+        navigate("/profile");
       } else {
         message.error(res?.message);
       }
