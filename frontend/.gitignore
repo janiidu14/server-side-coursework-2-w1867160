@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# Dependency directories
+node_modules/
+
 # testing
 /coverage
 
