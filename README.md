@@ -4,22 +4,57 @@ Student Name - U.J Rathnayaka
 IIT No - 20210450
 UOW No - w1867160
 
-# Rest Countries Dashboard
+# TravelTales Dashboard
 
-A secure full-stack web application that provides authenticated access to country data using the [REST Countries API](https://restcountries.com). Users can register, log in, and generate API keys to access protected routes. API key usage is tracked and only one active key per user is allowed at a time.
+A secure, feature-rich full-stack web application that blends personal travel storytelling with real-time country data. TravelTales lets users register, write and explore blog posts, follow other travelers, and view country insights via an integrated REST Countries API. Authenticated users are provided API keys for secure access to protected endpoints, with full tracking and dashboard visibility.
 
 ---
 
 ## Features
 
-- 🔐 User authentication including Register and Login (JWT + CSRF protection)
-- 🔑 API key generation and management
-- 📊 API key usage tracking and statistics
-- 🌍 Country data filtering (all, independent)
-- 🎛️ Dashboards to load countries and API key management
-- 💾 SQLite3-based database
+### 🔐 Authentication & Security
 
----
+- User registration and login with **JWT + CSRF protection**
+- Secure user sessions
+- Route protection and error handling
+
+### 🧾 Blog System
+
+- Create, edit, delete, and view **travel blogs**
+- Blogs enriched with **country data**: flag, currency, and capital
+- Date of visit input and blog metadata
+- Blog filtering by **country name** or **username**
+- Blog sorting by **newest**, **most liked**, or **most commented**
+- **Pagination** and **grid layout** for all blog posts
+
+### 💬 Reactions & Comments
+
+- Like and dislike functionality per blog post
+- View total likes/dislikes and **user’s reaction**
+- Optionally include **comments** and count per post
+
+### 👥 Social Features
+
+- **Follow/unfollow** users
+- View a user's **followers and following**
+- Personal feed showing blogs from **followed users**
+- **User directory grid** with follow status and action buttons
+
+### 🌍 Country Explorer
+
+- View all countries in a **searchable dropdown**
+- Display selected country’s:
+  - National flag 🏳️
+  - Capital city 🏙
+  - Currency 💰
+  - Languages 🗣
+
+### 📊 API Key Management (Admin/Developer Tools)
+
+- Generate and revoke **API keys** (1 active key per user)
+- Track **API key usage and rate limits**
+- Filter country data by `independent` status
+- Admin dashboard for **country data access tracking**
 
 ## Tech Stack
 
