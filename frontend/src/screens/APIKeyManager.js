@@ -113,7 +113,7 @@ const APIKeyManager = () => {
           API keys are shown by their ID and not the actual API key
         </Tag>
         <Tag color="red">
-          Without an active API key, access to the Rest Countries Dashboard is
+          Without an active API key, access to the Countries Dashboard is
           restricted.
         </Tag>
       </div>

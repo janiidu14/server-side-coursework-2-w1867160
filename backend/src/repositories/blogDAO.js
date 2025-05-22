@@ -103,15 +103,15 @@ class BlogDAO {
   async getAllBlogsWithSort(userId, sort = "newest") {
     const orderBy =
       {
-        newest: "b.created_at DESC",
+        newest: "b.updatedAt DESC",
         likes: "likes DESC",
         comments: "commentCount DESC",
-      }[sort] || "b.created_at DESC";
+      }[sort] || "b.updatedAt DESC";
 
     return new Promise((resolve, reject) => {
       db.all(
         `SELECT 
-        b.id, b.title, b.content, b.country, b.created_at, u.email AS author,
+        b.id, b.title, b.content, b.country, b.updatedAt, u.email AS author,
         COUNT(DISTINCT r.id) FILTER (WHERE r.type = 'like') AS likes,
         COUNT(DISTINCT c.id) AS commentCount,
         (

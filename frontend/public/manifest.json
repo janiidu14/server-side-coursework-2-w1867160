@@ -1,7 +1,7 @@
 {
-  "short_name": "Rest Countries",
-  "name": "Rest Countries",
-  "description": "A simple app to view country details", 
+  "short_name": "TravelTales",
+  "name": "TravelTales",
+  "description": "A simple app to blog travel content", 
   "version": "1.0.0",
   "start_url": ".",
   "display": "standalone",
